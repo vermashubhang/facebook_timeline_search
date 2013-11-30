@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>Login</title>
+</head>
+
+<body>
+
+
+<p align="center" style="background-color: #FFFF00">
+<font face="Forte" size="6"><b>Welcome to e-Shop</b></font></p>
+
+
+
+<!-- Add an HTML table to format the results into columns -->
+<TABLE BORDER="0" width ="300" cellspacing="0" cellpadding = "2" align="center">
+
+<form action="MyLoginSkeleton.jsp" method="post" >
+
+
+<a href="MySignUpSkeleton.jsp"><font face="Cooper Black"><i>Sign up!</i></font></a>
+<br>
+<br>
+<tr> <th><u></b>Existing User</u> </th></tr>
+
+<tr><td align="right"><b>User Name:&nbsp;</b></td>
+<td><input type="text" name="username"></td></tr>
+
+<tr><td align="right"><b>Password:&nbsp;</b></td>
+<td><input type="password" name="password" maxLength="12"></td></tr>
+
+<tr><td colspan="2" align="center">
+<input type="submit" name="submit" value=" Login "></td></tr>
+</form>
+
+</TABLE>
+
+<%
+String loginClicked = request.getParameter("submit");
+//check whether the "Login" buttun is clicked
+if(loginClicked != null)
+{
+//retrieve the username & password typed in by the user from the submitted form
+String username = request.getParameter("username");
+String password = request.getParameter("password");
+
+String u;
+String p;
+//
+String query = "SELECT * from login";
+dbselect.rs = dbselect.executeQuery(query);
+while ((dbselect.rs).next())
+{
+u = (dbselect.rs).getString("login");
+p = (dbselect.rs).getString("password");
+//to verify whether the username & password entered by the user match any of the
+//entries in the login table of the movies database	
+if((u.equals(username)) && (p.equals(password)))
+{
+//redirect to the page that can do shopping
+response.sendRedirect("AddToShoppingCart.jsp");	
+}
+
+} //end while loop
+%>
+<script language="JavaScript">
+alert("Wrong login name or password, please key in again!!!");
+
+</script>
+<%
+}
+
+
+
+%>
+
+
+</body>
+</html>
